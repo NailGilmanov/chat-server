@@ -4,10 +4,6 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 const app = express();
 
-const Promise = require('bluebird') 
-const AppDAO = require('./dao') 
-const Users = require('./user')
-
 const route = require("./route");
 const { addUser, findUser, getRoomUsers, removeUser } = require("./users");
 
@@ -17,7 +13,6 @@ function main() {
   app.use(route);
 
   const server = http.createServer(app);
-  const dao = new AppDAO('./database.sqlite3') 
 
   const io = new Server(server, {
     cors: {
@@ -33,8 +28,8 @@ function main() {
       const { user, isExist } = addUser({ name, room });
   
       const userMessage = isExist
-        ? `${user.name}, here you go again`
-        : `Hey my love ${user.name}`;
+        ? `${user.name}, сезне яңадан күрүемә шат`
+        : `Сәлам ${user.name}`;
   
       socket.emit("message", {
         data: { user: { name: "Admin" }, message: userMessage },
